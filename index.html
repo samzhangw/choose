@@ -1,0 +1,451 @@
+<html><head><title>會考落點分析系統選擇頁面</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+    :root {
+        --primary-color: #6200ee;
+        --secondary-color: #03dac6;
+        --background-color: #f5f5f5;
+        --card-bg-color: #ffffff;
+        --text-color: #333333;
+        --accent-color: #ff4081;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-icon {
+        position: absolute;
+        opacity: 0.1;
+        font-size: 10rem;
+        transition: transform 0.5s ease;
+    }
+
+    .header-icon.book {
+        top: -20px;
+        left: -20px;
+        transform: rotate(-15deg);
+    }
+
+    .header-icon.pencil {
+        bottom: -20px;
+        right: -20px;
+        transform: rotate(15deg);
+    }
+
+    header:hover .header-icon.book {
+        transform: rotate(0deg) scale(1.1);
+    }
+
+    header:hover .header-icon.pencil {
+        transform: rotate(30deg) scale(1.1);
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        margin-bottom: 30px;
+    }
+
+    .main-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: -50px;
+    }
+
+    .card {
+        background-color: var(--card-bg-color);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .region-selection {
+        flex-basis: calc(66.666% - 15px);
+    }
+
+    .sidebar {
+        flex-basis: calc(33.333% - 15px);
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+    }
+
+    h2 i {
+        margin-right: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    h2:hover i {
+        transform: scale(1.2);
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .btn i {
+        margin-right: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .btn:hover i {
+        transform: rotate(360deg);
+    }
+
+    .btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+
+    .btn:hover::after {
+        animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+        0% {
+            transform: scale(0, 0);
+            opacity: 1;
+        }
+        20% {
+            transform: scale(25, 25);
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            transform: scale(40, 40);
+        }
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-primary:hover {
+        background-color: #7c4dff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #00e5d0;
+    }
+
+    #countdown {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .news-list {
+        list-style-type: none;
+    }
+
+    .news-list li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+
+    .news-list li:hover {
+        transform: translateX(5px);
+    }
+
+    .news-list li::before {
+        content: "\f0da";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+        transition: transform 0.3s ease;
+    }
+
+    .news-list li:hover::before {
+        transform: translateX(3px);
+    }
+
+    footer {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 40px;
+    }
+
+    footer a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+        color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            flex-direction: column;
+        }
+
+        .region-selection, .sidebar {
+            flex-basis: 100%;
+        }
+    }
+
+    /* 新增粒子效果 */
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    header .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* 新增頁面載入動畫 */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .fadeInUp {
+        animation: fadeInUp 1s ease-out;
+    }
+
+</style>
+</head>
+<body>
+    <header>
+        <div id="particles-js"></div>
+        <div class="header-icon book"><i class="fas fa-book"></i></div>
+        <div class="header-icon pencil"><i class="fas fa-pencil-alt"></i></div>
+        <div class="container">
+            <h1 class="fadeInUp">114會考落點分析系統</h1>
+            <p class="subtitle fadeInUp">為你的升學之路指引方向</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <section class="region-selection card fadeInUp">
+                <h2><i class="fas fa-map-marked-alt"></i> 選擇你的區域</h2>
+                <p>請根據你所在的地區，選擇適合的落點分析系統：</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="redirectTo('central')">
+                        <i class="fas fa-map-marker-alt"></i> 中投區落點分析
+                    </button>
+                    <button class="btn btn-secondary" onclick="redirectTo('taoyuan')">
+                        <i class="fas fa-graduation-cap"></i> 桃聯區落點分析
+                    </button>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <section class="card fadeInUp">
+                    <h2><i class="fas fa-hourglass-half"></i> 114會考倒計時</h2>
+                    <div id="countdown"></div>
+                </section>
+
+                <section class="card fadeInUp">
+                    <h2><i class="fas fa-bullhorn"></i> 最新消息</h2>
+                    <ul class="news-list">
+                        <li>114年會考日期已公佈: 2025/5/17-18</li>
+                        <li>新增模擬考試功能</li>
+                        <li>升學講座報名開始</li>
+                    </ul>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> 114會考落點分析系統 版權所有 | 由 <a href="/about">教育科技團隊</a> 開發</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        function redirectTo(region) {
+            let url = '';
+            if (region === 'central') {
+                url = '/central-analysis';
+            } else if (region === 'taoyuan') {
+                url = '/taoyuan-analysis';
+            }
+            window.location.href = url;
+        }
+
+        // 更新版權年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 倒數計時器
+        function updateCountdown() {
+            const examDate = new Date("2025-05-17T09:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = examDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `
+                <div>距離114會考還有</div>
+                <div>${days} 天 ${hours} 小時</div>
+                <div>${minutes} 分 ${seconds} 秒</div>
+            `;
+
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("countdown").innerHTML = "114會考已經開始！";
+            }
+        }
+
+        updateCountdown();
+        const countdownTimer = setInterval(updateCountdown, 1000);
+
+        // 添加粒子效果
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" }, polygon: { nb_sides: 5 } },
+                opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+            },
+            retina_detect: true
+        });
+
+        // 添加滾動動畫
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fadeInUp');
+            elements.forEach((el) => {
+                if (isElementInViewport(el)) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('resize', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+
+    </script>
+</body>
+</html>
