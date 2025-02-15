@@ -464,7 +464,10 @@
                     </button>
                     <button class="btn btn-secondary" onclick="redirectTo('taoyuan')">
                         <i class="fas fa-graduation-cap"></i> 桃聯區落點分析
-                    </button>
+                      </button>
+                      <button class="btn btn-primary" onclick="redirectTo('kaohsiung')">
+                        <i class="fas fa-landmark"></i> 高雄區落點分析
+                      </button>
                 </div>
             </section>
 
@@ -495,14 +498,17 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         function redirectTo(region) {
-            let url = '';
-            if (region === 'central') {
-                url = 'https://ctttw.github.io/';
-            } else if (region === 'taoyuan') {
-                url = 'https://tyctw.github.io/';
-            }
-            window.location.href = url;
-        }
+          let url = '';
+  if (region === 'central') {
+    url = 'https://ctttw.github.io/';
+  } else if (region === 'taoyuan') {
+    url = 'https://tyctw.github.io/';
+  } else if (region === 'kaohsiung') {
+    url = 'https://khhtw.github.io/';
+  }
+  window.location.href = url;
+}
+
 
         document.getElementById('year').textContent = new Date().getFullYear();
 
