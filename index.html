@@ -464,10 +464,13 @@
                     </button>
                     <button class="btn btn-secondary" onclick="redirectTo('taoyuan')">
                         <i class="fas fa-graduation-cap"></i> 桃聯區落點分析
-                      </button>
-                      <button class="btn btn-primary" onclick="redirectTo('kaohsiung')">
+                    </button>
+                    <button class="btn btn-primary" onclick="redirectTo('kaohsiung')">
                         <i class="fas fa-landmark"></i> 高雄區落點分析
-                      </button>
+                    </button>
+                    <button class="btn btn-secondary" onclick="redirectTo('changhua')">
+                        <i class="fas fa-school"></i> 彰化區落點分析
+                    </button>
                 </div>
             </section>
 
@@ -482,6 +485,8 @@
                     <ul class="news-list">
                         <li class="news-item">114年會考日期已公佈: 2025/5/17-18</li>
                         <li class="news-item">近期即將擴展更多區域及功能</li>
+                        <li class="news-item">新增優質非營利高中及五專資訊</li>
+                        <li class="news-item">提供歷年各區錄取門檻趨勢分析</li>
                     </ul>
                 </section>
             </aside>
@@ -491,6 +496,7 @@
     <footer>
         <div class="container">
             <p>&copy; <span id="year"></span> 114會考落點分析系統 版權所有 | 由 <a href="https://sites.google.com/view/tyctw/%E9%A6%96%E9%A0%81">TYCTW</a> 開發</p>
+            <p><a href="#" id="feedbackLink">提供反饋</a> | <a href="#" id="aboutLink">關於我們</a></p>
         </div>
     </footer>
 
@@ -498,18 +504,44 @@
     <script>
         function redirectTo(region) {
           let url = '';
-  if (region === 'central') {
-    url = 'https://ctttw.github.io/';
-  } else if (region === 'taoyuan') {
-    url = 'https://tyctw.github.io/';
-  } else if (region === 'kaohsiung') {
-    url = 'https://khhtw.github.io/';
-  }
-  window.location.href = url;
-}
+          if (region === 'central') {
+            url = 'https://ctttw.github.io/';
+          } else if (region === 'taoyuan') {
+            url = 'https://tyctw.github.io/';
+          } else if (region === 'kaohsiung') {
+            url = 'https://khhtw.github.io/';
+          } else if (region === 'changhua') {
+            url = 'https://cchctw.github.io/';
+          }
+          
+          // Add transition effect
+          document.body.style.opacity = 0;
+          document.body.style.transition = 'opacity 0.5s ease';
+          
+          setTimeout(() => {
+            window.location.href = url;
+          }, 500);
+        }
 
-
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = 1;
+            
+            // Show current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Setup feedback link
+            document.getElementById('feedbackLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('感謝您的反饋！我們正在建立反饋系統，請稍後再試。');
+            });
+            
+            // Setup about link
+            document.getElementById('aboutLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('我們是一群致力於為國中畢業生提供升學指導的教育工作者，希望通過數據分析幫助學生做出更好的選擇。');
+            });
+        });
 
         function updateCountdown() {
             const examDate = new Date("2025-05-17T09:00:00").getTime();
@@ -563,16 +595,27 @@
             }
         }
 
+        // Initialize particles effect
         initParticles();
 
+        // Handle animations on mobile
         if (isMobileDevice()) {
             window.addEventListener('scroll', () => {
                 document.querySelectorAll('.fadeInUp').forEach(el => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
+                    const rect = el.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.8) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }
                 });
             }, { passive: true });
         }
+        
+        // Initial body style 
+        document.body.style.opacity = 0;
+        document.body.style.transition = 'opacity 0.5s ease';
     </script>
 </body>
 </html>
