@@ -369,6 +369,54 @@
             font-size: 0.9rem;
         }
 
+        /* Added styles for FAQ section */
+        .faq-container {
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.2rem;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            background-color: rgba(108, 92, 231, 0.05);
+        }
+
+        .faq-question i {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .faq-answer {
+            padding: 0 1.2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            max-height: 500px;
+        }
+
         /* Animations */
         @keyframes fadeUp {
             to {
@@ -500,6 +548,10 @@
                         <button class="region-btn btn-secondary" onclick="redirectTo('changhua')">
                             <i class="fas fa-school"></i> 彰化區落點分析
                         </button>
+
+                        <button class="region-btn btn-primary" onclick="redirectTo('nationwide')">
+                            <i class="fas fa-globe-asia"></i> 全國落點分析
+                        </button>
                     </div>
                 </div>
             </div>
@@ -524,7 +576,45 @@
                         <li class="news-item">114年會考日期已公佈: 2025/5/17-18</li>
                         <li class="news-item">近期即將擴展更多區域及功能</li>
                         <li class="news-item">提供歷年各區錄取門檻趨勢分析</li>
+                        <li class="news-item">新增北北基和台南區落點分析</li>
                     </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-question-circle"></i> 常見問題</h2>
+                </div>
+                <div class="card-body">
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>落點分析是什麼？</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>落點分析是根據學生在會考的成績，預測能上哪些學校的評估工具。我們的系統會根據歷年錄取資料，分析您的成績可能錄取的高中職。</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>如何使用落點分析系統？</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>選擇您所在的區域後，進入專屬的分析系統。輸入您的會考成績或模擬成績，系統會根據歷年數據分析出可能錄取的學校，並提供相關建議。</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>數據來源是什麼？</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>我們的數據來源於多方蒐集，以及歷年學生提供資料。</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -536,6 +626,7 @@
             <div class="footer-links">
                 <a href="#" class="footer-link" id="feedbackLink"><i class="fas fa-comment"></i> 提供反饋</a>
                 <a href="#" class="footer-link" id="aboutLink"><i class="fas fa-info-circle"></i> 關於我們</a>
+                <a href="#" class="footer-link" id="contactLink"><i class="fas fa-envelope"></i> 聯絡我們</a>
             </div>
             <p class="copyright">&copy; <span id="year"></span> 114會考落點分析系統 版權所有 | 由 <a href="https://sites.google.com/view/tyctw/%E9%A6%96%E9%A0%81" class="footer-link">TYCTW</a> 開發</p>
         </div>
@@ -558,6 +649,9 @@
             
             // Start countdown timer
             initCountdown();
+            
+            // Setup FAQ accordions
+            setupFAQ();
             
             // Show body with fade-in effect
             setTimeout(() => {
@@ -610,6 +704,11 @@
                 e.preventDefault();
                 alert('我們是一群致力於為國中畢業生提供升學指導的教育工作者，希望通過數據分析幫助學生做出更好的選擇。');
             });
+            
+            document.getElementById('contactLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('您可以透過email聯繫我們：exam.analysis@gmail.com');
+            });
         }
 
         function initCountdown() {
@@ -655,6 +754,26 @@
             `;
         }
 
+        function setupFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Toggle active class on the clicked item
+                    item.classList.toggle('active');
+                    
+                    // Close other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        }
+
         function redirectTo(region) {
             let url = '';
             if (region === 'central') {
@@ -665,6 +784,12 @@
                 url = 'https://khhtw.github.io/';
             } else if (region === 'changhua') {
                 url = 'https://cchctw.github.io/';
+            } else if (region === 'taipei') {
+                url = 'https://tpttw.github.io/';
+            } else if (region === 'tainan') {
+                url = 'https://tnctw.github.io/';
+            } else if (region === 'nationwide') {
+                url = 'https://tyctw.github.io/spare/';
             }
             
             // Add transition effect
