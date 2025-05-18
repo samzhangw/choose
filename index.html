@@ -777,12 +777,12 @@
         }
 
         function updateCountdown() {
-            const examDate = new Date("2025-05-17T09:00:00").getTime();
+            const examDate = new Date("2026-05-22T09:00:00").getTime();
             const now = new Date().getTime();
             const distance = examDate - now;
 
             if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<p>114會考已經開始！</p>";
+                document.getElementById("countdown").innerHTML = "<p>115會考已經開始！</p>";
                 return;
             }
 
@@ -792,7 +792,7 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById("countdown").innerHTML = `
-                <p>距離114年會考還有:</p>
+                <p>距離115年會考還有:</p>
                 <div class="countdown-timer">
                     <div class="countdown-item">
                         <div class="countdown-value">${days}</div>
