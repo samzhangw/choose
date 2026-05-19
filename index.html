@@ -36,7 +36,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            /* 避免點擊時出現藍色高光 */
             -webkit-tap-highlight-color: transparent; 
         }
 
@@ -226,7 +225,6 @@
             font-weight: 700;
         }
 
-        /* 取消行動版上的 hover 黏滯感，專注在 active */
         @media (hover: hover) {
             .region-btn:hover {
                 background: #FFFFFF;
@@ -302,7 +300,6 @@
             color: var(--text-dark);
             line-height: 1;
             margin-bottom: 0.4rem;
-            /* 讓數字在長位數時自動縮小 */
             font-variant-numeric: tabular-nums;
         }
 
@@ -426,6 +423,11 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #6366F1;
         }
 
         .copyright {
@@ -439,6 +441,106 @@
             text-decoration: none;
             font-weight: 800;
         }
+
+        /* =========================================
+           ✨ 彈窗 (Modal) 樣式
+           ========================================= */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 450px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FAFAFA;
+        }
+
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-header h3 i {
+            color: #6366F1;
+        }
+
+        .modal-close {
+            background: #F1F5F9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: #FEE2E2;
+            color: #EF4444;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .modal-body p { margin-bottom: 1rem; }
+        .modal-body p:last-child { margin-bottom: 0; }
+        .modal-body a { color: #6366F1; text-decoration: none; font-weight: 600; }
+        .modal-body a:hover { text-decoration: underline; }
+        .modal-body ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .modal-body li { margin-bottom: 0.5rem; }
 
         /* 載入動畫 */
         @keyframes slideUp {
@@ -485,16 +587,12 @@
         @keyframes spin { to { transform: rotate(1turn); } }
 
 
-        /* =========================================
-           📱 RWD 行動裝置優化 (Media Queries)
-           ========================================= */
-
+        /* RWD 行動裝置優化 */
         @media (max-width: 1024px) {
             .bento-grid { gap: 1.2rem; }
         }
 
         @media (max-width: 768px) {
-            /* 導覽列縮減留白 */
             nav {
                 width: 95%;
                 padding: 0.8rem 1.2rem;
@@ -502,11 +600,9 @@
             }
             .logo { font-size: 1.2rem; gap: 8px; }
 
-            /* Hero 區塊縮小間距 */
             .hero { padding: 3rem 0 2.5rem; }
             .hero h1 { margin-bottom: 0.8rem; }
             
-            /* 網格一律轉為單欄，調整內部留白 */
             .region-section, .side-section, .faq-section { grid-column: span 12; }
             .card {
                 padding: 1.5rem;
@@ -517,7 +613,6 @@
                 margin-bottom: 1.5rem;
             }
             
-            /* 強制雙欄配置，避免單欄太長或三欄太擠 */
             .region-cards {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.8rem;
@@ -540,16 +635,14 @@
 
             .btn-full-width {
                 padding: 1.2rem;
-                flex-direction: column; /* 手機版改回垂直排列較整齊 */
+                flex-direction: column;
                 gap: 0.8rem;
             }
 
-            /* 倒數計時器在手機版縮小字體與間距 */
             .countdown-container { gap: 8px; }
             .time-box { padding: 1rem 0.2rem; }
             .time-val { font-size: 1.5rem; }
             
-            /* FAQ 縮減留白 */
             .faq-section { padding: 1.5rem; }
             .faq-question {
                 padding: 1.2rem 1rem;
@@ -559,7 +652,6 @@
             .faq-item.active .faq-answer { padding: 1rem; }
         }
 
-        /* 針對更小的螢幕 (如 iPhone SE) */
         @media (max-width: 400px) {
             .region-cards { gap: 0.5rem; }
             .time-val { font-size: 1.2rem; }
@@ -698,11 +790,12 @@
 
     <footer>
         <div class="container">
+            <!-- 替換為觸發彈窗的連結 -->
             <div class="footer-links">
-                <a href="#" onclick="alert('感謝您的回饋！系統信箱：tyctw.analyze@gmail.com')">提供反饋</a>
-                <a href="#">關於團隊</a>
-                <a href="#">免責聲明</a>
-                <a href="#">數據來源</a>
+                <a href="#" onclick="openModal('feedback', event)"><i class="fas fa-comment-dots"></i> 提供反饋</a>
+                <a href="#" onclick="openModal('team', event)"><i class="fas fa-users"></i> 關於團隊</a>
+                <a href="#" onclick="openModal('disclaimer', event)"><i class="fas fa-exclamation-triangle"></i> 免責聲明</a>
+                <a href="#" onclick="openModal('datasource', event)"><i class="fas fa-database"></i> 數據來源</a>
             </div>
             <p class="copyright">
                 &copy; <span id="year"></span> 會考落點分析系統<br>UI Designed & Developed by <a href="https://sites.google.com/view/tyctw/%E9%A6%96%E9%A0%81" target="_blank">TYCTW</a>
@@ -710,14 +803,29 @@
         </div>
     </footer>
 
+    <!-- 共用彈窗結構 -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-info-circle"></i> 標題</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="關閉">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 內容會由 JS 動態填入 -->
+            </div>
+        </div>
+    </div>
+
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
+        // 倒數計時器
         function updateCountdown() {
             const examDate = new Date("2026-05-16T09:00:00").getTime();
             const now = new Date().getTime();
             const distance = examDate - now;
-
             const countdownElement = document.getElementById("countdown");
 
             if (distance < 0) {
@@ -753,6 +861,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // FAQ 手風琴
         const faqItems = document.querySelectorAll('.faq-item');
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
@@ -763,6 +872,7 @@
             });
         });
 
+        // 跳轉動畫
         function redirectTo(region) {
             const overlay = document.getElementById('loadingOverlay');
             overlay.classList.add('active'); 
@@ -782,6 +892,93 @@
 
             setTimeout(() => { window.location.href = url; }, 800);
         }
+
+        /* =========================================
+           ✨ 彈窗 (Modal) 資料與控制邏輯
+           ========================================= */
+        
+        // 1. 定義彈窗內容資料庫
+        const modalData = {
+            'feedback': {
+                icon: 'fa-comment-dots',
+                title: '提供反饋',
+                content: `
+                    <p>感謝您使用我們的落點分析系統！</p>
+                    <p>您的寶貴意見是我們進步的動力。若您在使用過程中遇到任何系統問題、發現數據異常，或有任何功能上的建議，都歡迎隨時與我們聯繫。</p>
+                    <p>📧 系統信箱：<br><a href="mailto:tyctw.analyze@gmail.com">tyctw.analyze@gmail.com</a></p>
+                    <p>我們會在收到信件後盡快回覆並處理，祝您金榜題名！</p>
+                `
+            },
+            'team': {
+                icon: 'fa-users',
+                title: '關於團隊',
+                content: `
+                    <p>我們是由一群熱心教育與數據分析的開發者組成的團隊 <strong>TYCTW</strong>。</p>
+                    <p>我們深知國中會考對每位考生的重要性，以及選填志願時的焦慮與不安。因此，我們結合了多年大數據分析經驗與歷年錄取分數趨勢，致力於打造這套<strong>免費、無廣告、高隱私</strong>的會考落點預測系統。</p>
+                    <p>希望能為每位考生的升學之路，點亮一盞客觀的明燈。</p>
+                `
+            },
+            'disclaimer': {
+                icon: 'fa-exclamation-triangle',
+                title: '免責聲明',
+                content: `
+                    <p>1. 本系統提供之落點預測與各校錄取門檻，皆為<strong>歷史數據分析與大數據推估之結果，僅供選填志願之「輔助參考」</strong>。</p>
+                    <p>2. 實際錄取標準將依當年考題難易度、各校實際招生名額、同分比序規則及整體考生選填狀況而有所浮動。本系統<strong>無法保證百分之百錄取</strong>。</p>
+                    <p>3. 系統運算皆於您的裝置前端完成，我們不會收集、傳輸或儲存您的任何個人成績資料。使用者應自行承擔參考本系統資訊後所做出之任何決策風險。</p>
+                `
+            },
+            'datasource': {
+                icon: 'fa-database',
+                title: '數據來源',
+                content: `
+                    <p>本系統的數據庫建立於以下公開與彙整來源：</p>
+                    <ul>
+                        <li>教育部國民及學前教育署歷年公開統計資料</li>
+                        <li>各就學區免試入學委員會公告數據</li>
+                        <li>歷年各高中職官方公告之最低錄取門檻與累積人數</li>
+                        <li>歷屆學長姐熱心回報之實際錄取分數、積點與等第</li>
+                    </ul>
+                    <p>我們團隊會持續於每年會考後進行數據庫的交叉比對與校正更新，以最大程度確保系統分析的精準度與時效性。</p>
+                `
+            }
+        };
+
+        // 2. 獲取 DOM 元素
+        const modal = document.getElementById('infoModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        // 3. 開啟彈窗函數
+        function openModal(type, e) {
+            e.preventDefault(); // 防止 a 標籤預設跳轉到頁首
+            const data = modalData[type];
+            
+            if (data) {
+                // 替換標題與圖示
+                modalTitle.innerHTML = `<i class="fas ${data.icon}"></i> ${data.title}`;
+                // 替換內容
+                modalBody.innerHTML = data.content;
+                // 顯示彈窗
+                modal.classList.add('active');
+                // 鎖定背景滾動，避免手機版滑動穿透
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // 4. 關閉彈窗函數
+        function closeModal() {
+            modal.classList.remove('active');
+            // 恢復背景滾動
+            document.body.style.overflow = '';
+        }
+
+        // 5. 點擊彈窗外部暗色背景自動關閉
+        modal.addEventListener('click', function(e) {
+            // 確認點擊的是 overlay 本身，而不是裡面的卡片
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
